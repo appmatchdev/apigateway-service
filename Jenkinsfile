@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Construir la imagen Docker
-                    sh 'podman build -t $DOCKER_IMAGE .'
+                    sh 'docker build -t $DOCKER_IMAGE .'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Ejecutar el contenedor Docker
-                    sh 'podman run -d --name $DOCKER_IMAGE $DOCKER_IMAGE'
+                    sh 'docker run -d --name $DOCKER_IMAGE $DOCKER_IMAGE'
                 }
             }
         }
@@ -43,8 +43,8 @@ pipeline {
             steps {
                 script {
                     // Detener y eliminar el contenedor para limpiar
-                    sh 'podman stop $DOCKER_IMAGE'
-                    sh 'podman rm $DOCKER_IMAGE'
+                    sh 'docker stop $DOCKER_IMAGE'
+                    sh 'docker rm $DOCKER_IMAGE'
                 }
             }
         }
