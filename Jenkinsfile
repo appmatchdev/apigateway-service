@@ -12,6 +12,15 @@ pipeline {
             }
         }
 
+        stage('Ejecutar Build con Gradle') {
+            steps {
+                script {
+                    // Ejecutar Gradle build
+                    sh './gradle build'  // Aquí asumimos que tienes un archivo gradlew en tu repositorio
+                }
+            }
+        }
+
         stage('Construir Imagen Docker') {
             steps {
                 script {
