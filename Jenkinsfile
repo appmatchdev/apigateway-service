@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'apigateway-service'
+        GRADLE_HOME = '/usr/local/gradle'
+        PATH = "$GRADLE_HOME/bin:$PATH"
     }
 
     stages {
@@ -12,11 +14,20 @@ pipeline {
             }
         }
 
+        stage('Verificar Gradle') {
+            steps {
+                script {
+                    // Verificar si Gradle está accesible
+                    sh 'gradle --version'  // Esto te muestra la versión de Gradle instalada
+                }
+            }
+        }
+
         stage('Ejecutar Build con Gradle') {
             steps {
                 script {
-                    // Ejecutar Gradle build
-                    sh 'gradle build' 
+                    // Asegurarse de limpiar y luego construir
+                    sh 'gradle clean build'  // Limpia antes de construir
                 }
             }
         }
@@ -24,6 +35,8 @@ pipeline {
         stage('Construir Imagen Docker') {
             steps {
                 script {
+                    // Verifica si el .jar fue generado, por ejemplo en 'build/libs'
+                    sh 'ls build/libs'  // Para confirmar la ubicación del archivo .jar
                     // Construir la imagen Docker
                     sh 'docker build -t $DOCKER_IMAGE .'
                 }
@@ -33,8 +46,8 @@ pipeline {
         stage('Ejecutar Tests') {
             steps {
                 script {
-                    // Aquí puedes ejecutar tus pruebas
-                    sh './run_tests.sh'  // Este es un ejemplo, ajusta según lo que tengas en tu repo
+                    // Ejecutar los tests
+                    sh './run_tests.sh'  // Asegúrate de que este script exista
                 }
             }
         }
