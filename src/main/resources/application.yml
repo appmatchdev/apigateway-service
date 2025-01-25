@@ -1,0 +1,40 @@
+server:
+  port: ${SERVER_PORT:8075}
+spring:
+  main:
+    web-application-type: reactive
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://127.0.0.1:5432/appmatchdb}  # URL de la base de datos, usa variable de entorno DB_URL si está definida
+    username: ${DB_USERNAME:postgres}  # Usuario de la base de datos, usa variable DB_USERNAME si está definida
+    psd: ${DB_PSD:admin}  # Contraseña de la base de datos, usa variable DB_PASSWORD si está definida
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: ${DB_MAX_POOL_SIZE:20}  # Tamaño máximo del pool
+      minimum-idle: ${DB_MIN_IDLE:5}  # Mínimo de conexiones inactivas
+      idle-timeout: ${DB_IDLE_TIMEOUT:30000}  # Tiempo máximo de inactividad
+      max-lifetime: ${DB_MAX_LIFETIME:1800000}  # Tiempo máximo de vida de una conexión
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}  # Timeout de conexión
+      pool-name: ${DB_POOL_NAME:HikariPool}  # Nombre del pool
+
+  # Configuración de JPA
+  jpa:
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}  # Dialecto de Hibernate
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}  # Permite la actualización del esquema
+    show-sql: ${JPA_SHOW_SQL:true}  # Muestra las consultas SQL ejecutadas
+    open-in-view: ${JPA_OPEN_IN_VIEW:false}  # Desactiva la sesión de Hibernate después de la vista
+
+  # Configuración de Jackson
+  jackson:
+    serialization:
+      fail-on-empty-beans: ${JACKSON_FAIL_ON_EMPTY_BEANS:false}
+
+  # Configuración del servidor
+
+# Configuración JWT
+jwt:
+  secret: ${JWT_SECRET:mysecretkey}  # Clave secreta JWT, usa JWT_SECRET si está definida
+  expiration: ${JWT_EXPIRATION:3600}  # Expiración del token JWT (en segundos)
