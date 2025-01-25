@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git 'https://github.com/appmatchdev/apigateway-service.git'  // Reemplaza con tu URL de GitHub
+                git url: 'https://github.com/appmatchdev/apigateway-service.git', branch: 'main'
             }
         }
 
