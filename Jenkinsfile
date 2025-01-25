@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // Ejecutar Gradle build
-                    sh './gradle build'  // Aquí asumimos que tienes un archivo gradlew en tu repositorio
+                    sh 'gradle build' 
                 }
             }
         }
